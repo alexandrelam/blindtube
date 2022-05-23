@@ -29,6 +29,7 @@
   "dependencies": {
     "apollo-server": "^3.7.0",
     "graphql": "^16.5.0",
+    "mongoose": "^6.3.4",
     "tslib": "^2.3.0"
   }
 }
