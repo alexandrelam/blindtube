@@ -27,6 +27,8 @@
     "typescript": "~4.6.2"
   },
   "dependencies": {
+    "apollo-server": "^3.7.0",
+    "graphql": "^16.5.0",
     "tslib": "^2.3.0"
   }
 }
