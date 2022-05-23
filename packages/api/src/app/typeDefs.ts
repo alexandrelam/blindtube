@@ -7,4 +7,8 @@ export const typeDefs = gql`
   type Query {
     ${Book.queries}
   }
+  
+  type Mutation {
+    ${Book.mutations}
+  }
 `;
