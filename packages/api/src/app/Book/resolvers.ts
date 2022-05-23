@@ -1,3 +1,5 @@
+import { ValidationError } from 'apollo-server';
+
 const books = [
   {
     title: 'The Awakening',
@@ -16,5 +18,11 @@ const books = [
 export const resolvers = {
   queries: {
     books: () => books,
+    book: (_parent, args) => {
+      if (args.index < 0 || args.index >= books.length)
+        throw new ValidationError('Book does not exist');
+
+      return books[args.index];
+    },
   },
 };
