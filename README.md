@@ -1,5 +1,38 @@
 # youtube-blindtest
 
+## The flow
+
+- Enter a name
+  - store name in local storage
+- create a room with players, musics, leader of room
+  - when entering the room prompt add a playlist
+    - store playlist in localstorage
+  - leader of room can start game
+    - can play with settings
+      - number of musics
+      - duration of answer
+      - don't play the music from the start
+    - display the settings for everyone
+    - choose song for the game
+    - during the game can skip answer
+
+## Tables
+
+#### Room
+
+- id
+- name
+- songs: []
+- status (ingame, beforegame, gameended)
+- players
+  - id
+  - name
+  - leader: boolean
+
+## Later
+
+- store user with data, like number of music found
+
 ## ideas
 
 - utiliser l'api de google pour pouvoir récupérer les playlists des users
