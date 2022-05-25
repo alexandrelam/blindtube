@@ -3,12 +3,16 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 type Props = {
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  playerName: string;
+  setPlayerName: Dispatch<SetStateAction<string>>;
   submit: () => void;
 };
 
-export function LoginForm({ value, setValue, submit }: Props) {
+export function LoginForm({
+  playerName: value,
+  setPlayerName: setValue,
+  submit,
+}: Props) {
   return (
     <>
       <TextField

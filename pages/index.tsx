@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { styled } from "@mui/system";
 import { LoginForm } from "../components/LoginForm";
 import { useState } from "react";
-import { addPlayer } from "../firebase/users";
+import { createLobby } from "../firebase/lobby";
 
 const Container = styled("div")({
   margin: "1rem",
@@ -11,12 +11,11 @@ const Container = styled("div")({
 });
 
 const Home: NextPage = () => {
-  const [value, setValue] = useState("");
+  const [playerName, setPlayerName] = useState("");
 
-  async function joinGame() {
+  async function createGame() {
     try {
-      await addPlayer(value);
-      console.log("Player added");
+      await createLobby(playerName);
     } catch (error) {
       console.error(error);
     }
@@ -24,7 +23,11 @@ const Home: NextPage = () => {
 
   return (
     <Container>
-      <LoginForm value={value} setValue={setValue} submit={joinGame} />
+      <LoginForm
+        playerName={playerName}
+        setPlayerName={setPlayerName}
+        submit={createGame}
+      />
     </Container>
   );
 };
