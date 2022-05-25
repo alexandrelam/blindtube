@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { styled } from "@mui/system";
 import { LoginForm } from "../components/LoginForm";
 import { useState } from "react";
+import { addPlayer } from "../firebase/users";
 
 const Container = styled("div")({
   margin: "1rem",
@@ -12,8 +13,13 @@ const Container = styled("div")({
 const Home: NextPage = () => {
   const [value, setValue] = useState("");
 
-  function joinGame() {
-    console.log("joinGame");
+  async function joinGame() {
+    try {
+      await addPlayer(value);
+      console.log("Player added");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
