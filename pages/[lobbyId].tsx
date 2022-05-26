@@ -8,6 +8,16 @@ import {
 } from "../firebase/localstorage/playerName";
 import { LoginForm } from "../components/LoginForm";
 import { addPlayerToLobby, isPlayerInLobby } from "../firebase/player";
+import { Header } from "../components/Header";
+import { styled } from "@mui/system";
+import { getPlaylist } from "../firebase/localstorage/playlist";
+
+const Container = styled("div")({
+  display: "flex",
+  height: "100%",
+  alignItems: "center",
+  justifyContent: "center",
+});
 
 async function lobbyDoesntExistRedirect(
   lobbyId: string,
@@ -20,6 +30,7 @@ async function lobbyDoesntExistRedirect(
 export default function Lobby() {
   const router = useRouter();
   const [playerName, setPlayerName] = useState<string>("");
+  const [playlistURL, setPlaylistURL] = useState<string>("");
   const [hasPlayerSetName, setHasPlayerSetName] = useState<boolean>(false);
   const [lobbyPlayers, setLobbyPlayers] = useState<string[]>([]);
   const { lobbyId } = router.query;
@@ -35,45 +46,36 @@ export default function Lobby() {
           setHasPlayerSetName(true);
         }
 
+        // if player has playlist in localstorage then use it
+        if (getPlaylist()) {
+          setPlaylistURL(getPlaylist());
+        }
+
         getValue(`lobby/${lobbyId}/players`, setLobbyPlayers);
       })();
     }
   }, [lobbyId, router]);
 
-  useEffect(() => {
-    if (lobbyId && hasPlayerSetName) {
-      // check if player is in lobby
-      // if not add him to lobby
-      (async () => {
-        if (!(await isPlayerInLobby(lobbyId as string, playerName)))
-          await addPlayerToLobby(lobbyId as string, playerName);
-      })();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lobbyId, hasPlayerSetName]);
-
-  function handleSubmitName() {
-    setPlayerName(playerName);
-    setLocalStoragePlayerName(playerName);
+  async function joinLobby() {
+    if (!(await isPlayerInLobby(lobbyId as string, playerName)))
+      await addPlayerToLobby(lobbyId as string, playerName);
     setHasPlayerSetName(true);
+    setPlayerName(playerName);
   }
 
   return (
-    <>
-      <h2>Lobby ID: {lobbyId}</h2>
-      <h3>Players:</h3>
-
-      {lobbyPlayers.map((player, index) => (
-        <p key={index}>{player[0]}</p>
-      ))}
-
+    <Container>
+      {hasPlayerSetName && <Header playerName={playerName} />}
       {!hasPlayerSetName && (
         <LoginForm
           playerName={playerName}
           setPlayerName={setPlayerName}
-          submit={handleSubmitName}
+          playlistURL={playlistURL}
+          setPlaylistURL={setPlaylistURL}
+          submit={joinLobby}
+          isJoining
         />
       )}
-    </>
+    </Container>
   );
 }

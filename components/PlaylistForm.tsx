@@ -23,12 +23,12 @@ const Wrapper = styled("div")({
 });
 
 type Props = {
-  handleCreateGame: (playerlistURL: string) => void;
+  submit: () => void;
+  playlistURL: string;
+  setPlaylistURL: (playerlistURL: string) => void;
 };
 
-export function PlaylistForm({ handleCreateGame }: Props) {
-  const [url, setUrl] = React.useState(getPlaylist());
-
+export function PlaylistForm({ playlistURL, setPlaylistURL, submit }: Props) {
   return (
     <Container>
       <Title>Ajouter une playlist youtube</Title>
@@ -37,16 +37,19 @@ export function PlaylistForm({ handleCreateGame }: Props) {
           id="outlined-basic"
           label="URL"
           variant="outlined"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          value={playlistURL}
+          onChange={(e) => setPlaylistURL(e.target.value)}
         />
-        <Button variant="contained" onClick={() => handleCreateGame(url)}>
+        <Button variant="contained" onClick={submit}>
           Ajouter
         </Button>
         <Button
           variant="outlined"
           color="secondary"
-          onClick={() => handleCreateGame("")}
+          onClick={() => {
+            setPlaylistURL("");
+            submit();
+          }}
         >
           Skip
         </Button>

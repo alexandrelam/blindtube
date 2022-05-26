@@ -3,14 +3,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
-const Title = styled("h1")({
-  fontSize: "2.5rem",
-  fontWeight: "bold",
-  margin: "1rem 0",
-  color: "white",
-  letterSpacing: "0.5rem",
-});
+import { Header } from "./Header";
+import { NameForm } from "./NameForm";
+import { PlaylistForm } from "./PlaylistForm";
 
 const Container = styled("div")({
   display: "flex",
@@ -19,41 +14,45 @@ const Container = styled("div")({
   gap: "3rem",
 });
 
-const Wrapper = styled("div")({
-  display: "flex",
-  gap: "1rem",
-});
-
 type Props = {
   playerName: string;
   setPlayerName: Dispatch<SetStateAction<string>>;
+  playlistURL: string;
+  setPlaylistURL: Dispatch<SetStateAction<string>>;
   submit: () => void;
+  isJoining?: boolean;
 };
 
 export function LoginForm({
-  playerName: value,
-  setPlayerName: setValue,
+  playerName,
+  setPlayerName,
+  playlistURL,
+  setPlaylistURL,
   submit,
+  isJoining,
 }: Props) {
+  const [step, setStep] = React.useState(0);
+
   return (
     <Container>
-      <Title>🎵 BLINDTUBE</Title>
-      <Wrapper>
-        <TextField
-          id="outlined-basic"
-          label="Pseudo cool :)"
-          variant="outlined"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+      {step === 0 && (
+        <NameForm
+          playerName={playerName}
+          setPlayerName={setPlayerName}
+          setStep={setStep}
+          isJoining={isJoining}
         />
-        <Button
-          variant="contained"
-          onClick={submit}
-          endIcon={<ArrowForwardIcon />}
-        >
-          Démarrer
-        </Button>
-      </Wrapper>
+      )}
+      {step === 1 && (
+        <>
+          <Header playerName={playerName} />
+          <PlaylistForm
+            playlistURL={playlistURL}
+            setPlaylistURL={setPlaylistURL}
+            submit={submit}
+          />
+        </>
+      )}
     </Container>
   );
 }

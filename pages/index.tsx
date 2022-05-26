@@ -18,11 +18,10 @@ const Container = styled("div")({
 
 const Home: NextPage = () => {
   const router = useRouter();
-
   const [playerName, setPlayerName] = useState("");
-  const [step, setStep] = useState(0);
+  const [playlistURL, setPlaylistURL] = useState("");
 
-  async function createGame(playlistURL: string) {
+  async function createGame() {
     try {
       if (playlistURL) {
         localStorageAddPlayList(playlistURL);
@@ -34,26 +33,15 @@ const Home: NextPage = () => {
     }
   }
 
-  async function handleSubmitName() {
-    localStorageSetPlayerName(playerName);
-    setStep(1);
-  }
-
   return (
     <Container>
-      {step === 0 && (
-        <LoginForm
-          playerName={playerName}
-          setPlayerName={setPlayerName}
-          submit={handleSubmitName}
-        />
-      )}
-      {step === 1 && (
-        <>
-          <Header playerName={playerName} />
-          <PlaylistForm handleCreateGame={createGame} />
-        </>
-      )}
+      <LoginForm
+        playerName={playerName}
+        setPlayerName={setPlayerName}
+        playlistURL={playlistURL}
+        setPlaylistURL={setPlaylistURL}
+        submit={createGame}
+      />
     </Container>
   );
 };
