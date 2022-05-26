@@ -13,24 +13,19 @@ import { PlayerList } from "../components/PlayerList";
 import { Settings } from "../components/Settings";
 import LinkIcon from "@mui/icons-material/Link";
 
-const Container = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  maxWidth: "968px",
-  margin: "0 auto",
-  height: "80%",
-});
-
 const Wrapper = styled("div")({
   display: "flex",
   width: "100%",
+  maxWidth: "900px",
   flexDirection: "column",
   gap: "3rem",
+  margin: "0 auto",
+  marginTop: "3rem",
 });
 
 const ContentWrapper = styled("div")({
+  maxWidth: "800px",
+  width: "100%",
   display: "flex",
   margin: "0 3rem",
   justifyContent: "space-between",
@@ -45,6 +40,13 @@ const LobbyHeaderWrapper = styled("div")({
   display: "flex",
   gap: "1rem",
   margin: "0 3rem",
+  alignItems: "center",
+});
+
+const LoginWrapper = styled("div")({
+  height: "80%",
+  display: "flex",
+  justifyContent: "center",
   alignItems: "center",
 });
 
@@ -81,7 +83,6 @@ export default function Lobby() {
         }
 
         getValue(`lobby/${lobbyId}/players`, setLobbyPlayers);
-        console.log(lobbyPlayers);
       })();
     }
   }, [lobbyId, router]);
@@ -93,9 +94,9 @@ export default function Lobby() {
   }
 
   return (
-    <Container>
+    <>
       {hasPlayerSetName && (
-        <>
+        <div>
           <Header playerName={playerName} />
           <Wrapper>
             <LobbyHeaderWrapper>
@@ -116,18 +117,20 @@ export default function Lobby() {
               <Settings />
             </ContentWrapper>
           </Wrapper>
-        </>
+        </div>
       )}
       {!hasPlayerSetName && (
-        <LoginForm
-          playerName={playerName}
-          setPlayerName={setPlayerName}
-          playlistURL={playlistURL}
-          setPlaylistURL={setPlaylistURL}
-          submit={joinLobby}
-          isJoining
-        />
+        <LoginWrapper>
+          <LoginForm
+            playerName={playerName}
+            setPlayerName={setPlayerName}
+            playlistURL={playlistURL}
+            setPlaylistURL={setPlaylistURL}
+            submit={joinLobby}
+            isJoining
+          />
+        </LoginWrapper>
       )}
-    </Container>
+    </>
   );
 }
