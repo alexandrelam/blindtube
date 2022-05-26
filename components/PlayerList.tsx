@@ -14,14 +14,22 @@ const Wrapper = styled("div")({
   gap: "1rem",
 });
 
-export function PlayerList() {
+type Props = {
+  players: any[];
+};
+
+export function PlayerList({ players }: Props) {
   return (
     <div>
       <Title>Joueurs: 3</Title>
       <Wrapper>
-        <PlayerCard />
-        <PlayerCard />
-        <PlayerCard />
+        {players.map((player) => (
+          <PlayerCard
+            key={player[0]}
+            playerName={player[0]}
+            playlistURL={player[1].playlistURL}
+          />
+        ))}
       </Wrapper>
     </div>
   );

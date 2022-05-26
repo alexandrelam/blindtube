@@ -81,6 +81,7 @@ export default function Lobby() {
         }
 
         getValue(`lobby/${lobbyId}/players`, setLobbyPlayers);
+        console.log(lobbyPlayers);
       })();
     }
   }, [lobbyId, router]);
@@ -111,7 +112,7 @@ export default function Lobby() {
               </Button>
             </LobbyHeaderWrapper>
             <ContentWrapper>
-              <PlayerList />
+              <PlayerList players={lobbyPlayers} />
               <Settings />
             </ContentWrapper>
           </Wrapper>

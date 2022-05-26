@@ -23,11 +23,16 @@ const Playlist = styled("span")({
   color: "white",
 });
 
-export function PlayerCard() {
+type Props = {
+  playerName: string;
+  playlistURL: string;
+};
+
+export function PlayerCard({ playerName, playlistURL }: Props) {
   return (
     <Card>
-      <Title>Cool pseudo</Title>
-      <Playlist>Playlist: Cool playlist</Playlist>
+      <Title>{playerName}</Title>
+      {playlistURL && <Playlist>Playlist: {playlistURL}</Playlist>}
     </Card>
   );
 }
