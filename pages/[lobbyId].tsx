@@ -90,7 +90,10 @@ export default function Lobby() {
     <>
       {hasPlayerSetName && (
         <div>
-          <Header playerName={playerName} lobbyId={lobbyId} />
+          <Header
+            playerName={playerName}
+            lobbyId={lobbyId as string | undefined}
+          />
           <Wrapper>
             <LobbyHeaderWrapper>
               <LobbyID>
