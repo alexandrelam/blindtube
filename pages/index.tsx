@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { setPlayerName as localStorageSetPlayerName } from "../firebase/localstorage/playerName";
 import { PlaylistForm } from "../components/PlaylistForm";
 import { Header } from "../components/Header";
-import { addPlayList } from "../firebase/localstorage/playlist";
+import { addPlayList as localStorageAddPlayList } from "../firebase/localstorage/playlist";
 
 const Container = styled("div")({
   display: "flex",
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   async function createGame(playlistURL: string) {
     try {
       if (playlistURL) {
-        addPlayList(playlistURL);
+        localStorageAddPlayList(playlistURL);
       }
       const lobbyId = await createLobby(playerName, playlistURL);
       router.push(`/${lobbyId}`);

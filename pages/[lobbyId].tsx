@@ -14,7 +14,7 @@ async function lobbyDoesntExistRedirect(
   router: ReturnType<typeof useRouter>
 ) {
   const isLobbyExist = await isLobbyExistPromise(lobbyId);
-  if (!isLobbyExist) router.push("/");
+  if (!isLobbyExist) await router.push("/");
 }
 
 export default function Lobby() {
@@ -26,15 +26,17 @@ export default function Lobby() {
 
   useEffect(() => {
     if (lobbyId) {
-      lobbyDoesntExistRedirect(lobbyId as string, router);
+      (async () => {
+        await lobbyDoesntExistRedirect(lobbyId as string, router);
 
-      // if player has set a name in localstorage then use it
-      if (getPlayerName()) {
-        setPlayerName(getPlayerName());
-        setHasPlayerSetName(true);
-      }
+        // if player has set a name in localstorage then use it
+        if (getPlayerName()) {
+          setPlayerName(getPlayerName());
+          setHasPlayerSetName(true);
+        }
 
-      getValue(`lobby/${lobbyId}/players`, setLobbyPlayers);
+        getValue(`lobby/${lobbyId}/players`, setLobbyPlayers);
+      })();
     }
   }, [lobbyId, router]);
 
