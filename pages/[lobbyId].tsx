@@ -90,7 +90,7 @@ export default function Lobby() {
     <>
       {hasPlayerSetName && (
         <div>
-          <Header playerName={playerName} />
+          <Header playerName={playerName} lobbyId={lobbyId} />
           <Wrapper>
             <LobbyHeaderWrapper>
               <LobbyID>

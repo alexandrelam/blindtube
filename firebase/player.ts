@@ -17,3 +17,7 @@ export function addPlayerToLobby(
     playlistURL,
   });
 }
+
+export function removePlayerFromLobby(lobbyId: string, playerName: string) {
+  return setValue(`lobby/${lobbyId}/players/${playerName}`, null);
+}

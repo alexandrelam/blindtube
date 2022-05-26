@@ -19,7 +19,7 @@ export const database = getDatabase(app);
 
 export async function setValue(
   path: string,
-  value: string | Record<string | number, any>,
+  value: string | null | Record<string | number, any>,
   returnValue: any = null
 ) {
   await set(ref(database, path), value);

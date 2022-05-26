@@ -1,5 +1,8 @@
 import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
+import { useRouter } from "next/router";
+import { removePlayerName } from "../firebase/localstorage/playerName";
+import { removePlayerFromLobby } from "../firebase/player";
 
 const Container = styled("div")({
   display: "flex",
@@ -32,17 +35,29 @@ const PlayerName = styled("span")({
 
 type Props = {
   playerName: string;
+  lobbyId?: string;
 };
 
-export function Header({ playerName }: Props) {
+export function Header({ playerName, lobbyId }: Props) {
+  const router = useRouter();
+
+  function handleQuit() {
+    if (!lobbyId) return;
+    removePlayerName();
+    removePlayerFromLobby(lobbyId, playerName);
+    router.push("/");
+  }
+
   return (
     <Container>
       <Title>🎵 BLINDTUBE</Title>
       <Wrapper>
         <PlayerName>{playerName}</PlayerName>
-        <Button variant="outlined" color="secondary">
-          Quitter
-        </Button>
+        {lobbyId && (
+          <Button variant="outlined" color="secondary" onClick={handleQuit}>
+            Quitter
+          </Button>
+        )}
       </Wrapper>
     </Container>
   );
