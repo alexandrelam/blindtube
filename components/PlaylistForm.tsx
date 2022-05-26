@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Button, TextField } from "@mui/material";
+import { Header } from "./Header";
 
 const Title = styled("h2")({
   fontSize: "2.5rem",
@@ -29,23 +30,26 @@ export function PlaylistForm({ handleCreateGame }: Props) {
   const [url, setUrl] = React.useState("");
 
   return (
-    <Container>
-      <Title>Ajouter une playlist youtube</Title>
-      <Wrapper>
-        <TextField
-          id="outlined-basic"
-          label="URL"
-          variant="outlined"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        <Button variant="contained" onClick={handleCreateGame}>
-          Ajouter
-        </Button>
-        <Button variant="outlined" color="secondary">
-          Skip
-        </Button>
-      </Wrapper>
-    </Container>
+    <>
+      <Header playerName="test" />
+      <Container>
+        <Title>Ajouter une playlist youtube</Title>
+        <Wrapper>
+          <TextField
+            id="outlined-basic"
+            label="URL"
+            variant="outlined"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+          <Button variant="contained" onClick={handleCreateGame}>
+            Ajouter
+          </Button>
+          <Button variant="outlined" color="secondary">
+            Skip
+          </Button>
+        </Wrapper>
+      </Container>
+    </>
   );
 }
