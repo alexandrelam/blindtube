@@ -3,7 +3,7 @@ import { get, child, ref } from "firebase/database";
 import { lobbyIdGenerator } from "./utils/lobbyIdGenerator";
 
 export async function createLobby(playerName: string) {
-  const lobbyId = lobbyIdGenerator();
+  const lobbyId = await lobbyIdGenerator();
   await setValue(`lobby/${lobbyId}/players`, {
     [playerName]: {
       playlist: "",
