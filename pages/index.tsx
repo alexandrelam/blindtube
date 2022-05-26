@@ -3,19 +3,24 @@ import { styled } from "@mui/system";
 import { LoginForm } from "../components/LoginForm";
 import { useState } from "react";
 import { createLobby } from "../firebase/lobby";
+import { useRouter } from "next/router";
+import { setPlayerName as localStorageSetPlayerName } from "../firebase/localstorage/playerName";
 
 const Container = styled("div")({
-  margin: "1rem",
   display: "flex",
   gap: "1rem",
 });
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   const [playerName, setPlayerName] = useState("");
 
   async function createGame() {
     try {
-      await createLobby(playerName);
+      const lobbyId = await createLobby(playerName);
+      localStorageSetPlayerName(playerName);
+      router.push(`/${lobbyId}`);
     } catch (error) {
       console.error(error);
     }
