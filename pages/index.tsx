@@ -8,7 +8,7 @@ import { addPlayList as localStorageAddPlayList } from "../firebase/localstorage
 
 const Container = styled("div")({
   display: "flex",
-  height: "100%",
+  height: "80%",
   alignItems: "center",
   justifyContent: "center",
 });

@@ -14,17 +14,18 @@ import { Settings } from "../components/Settings";
 import LinkIcon from "@mui/icons-material/Link";
 
 const Container = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   width: "100%",
   maxWidth: "968px",
   margin: "0 auto",
-  paddingTop: "10rem",
-  height: "100%",
+  height: "80%",
 });
 
 const Wrapper = styled("div")({
   display: "flex",
   width: "100%",
-  height: "100%",
   flexDirection: "column",
   gap: "3rem",
 });
