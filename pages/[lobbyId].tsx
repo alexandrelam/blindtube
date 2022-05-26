@@ -10,19 +10,29 @@ import { styled } from "@mui/system";
 import { getPlaylist } from "../firebase/localstorage/playlist";
 import { Button } from "@mui/material";
 import { PlayerList } from "../components/PlayerList";
+import { Settings } from "../components/Settings";
 import LinkIcon from "@mui/icons-material/Link";
 
 const Container = styled("div")({
-  display: "flex",
+  width: "100%",
+  maxWidth: "968px",
+  margin: "0 auto",
+  paddingTop: "10rem",
   height: "100%",
-  alignItems: "center",
-  justifyContent: "center",
+});
+
+const Wrapper = styled("div")({
+  display: "flex",
+  width: "100%",
+  height: "100%",
+  flexDirection: "column",
+  gap: "3rem",
 });
 
 const ContentWrapper = styled("div")({
   display: "flex",
-  flexDirection: "column",
-  gap: "3rem",
+  margin: "0 3rem",
+  justifyContent: "space-between",
 });
 
 const LobbyID = styled("span")({
@@ -33,6 +43,7 @@ const LobbyID = styled("span")({
 const LobbyHeaderWrapper = styled("div")({
   display: "flex",
   gap: "1rem",
+  margin: "0 3rem",
   alignItems: "center",
 });
 
@@ -84,7 +95,7 @@ export default function Lobby() {
       {hasPlayerSetName && (
         <>
           <Header playerName={playerName} />
-          <ContentWrapper>
+          <Wrapper>
             <LobbyHeaderWrapper>
               <LobbyID>
                 <strong>Lobby id: </strong>
@@ -98,8 +109,11 @@ export default function Lobby() {
                 Inviter
               </Button>
             </LobbyHeaderWrapper>
-            <PlayerList />
-          </ContentWrapper>
+            <ContentWrapper>
+              <PlayerList />
+              <Settings />
+            </ContentWrapper>
+          </Wrapper>
         </>
       )}
       {!hasPlayerSetName && (

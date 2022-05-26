@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 
 const Card = styled("div")({
   display: "flex",
+  width: "20rem",
   flexDirection: "column",
   padding: "1rem",
   gap: "0.5rem",

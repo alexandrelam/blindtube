@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 const Container = styled("div")({
   position: "absolute",
   top: 0,
+  left: 0,
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
