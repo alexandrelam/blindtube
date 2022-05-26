@@ -8,7 +8,9 @@ import { setPlayerName as localStorageSetPlayerName } from "../firebase/localsto
 
 const Container = styled("div")({
   display: "flex",
-  gap: "1rem",
+  height: "80%",
+  alignItems: "center",
+  justifyContent: "center",
 });
 
 const Home: NextPage = () => {
