@@ -21,7 +21,7 @@ type Props = {
 export function PlayerList({ players }: Props) {
   return (
     <div>
-      <Title>Joueurs: 3</Title>
+      <Title>Joueurs: {players.length}</Title>
       <Wrapper>
         {players.map((player) => (
           <PlayerCard

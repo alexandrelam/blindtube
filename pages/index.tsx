@@ -6,13 +6,6 @@ import { createLobby } from "../firebase/lobby";
 import { useRouter } from "next/router";
 import { addPlayList as localStorageAddPlayList } from "../firebase/localstorage/playlist";
 
-const Container = styled("div")({
-  display: "flex",
-  height: "80%",
-  alignItems: "center",
-  justifyContent: "center",
-});
-
 const Home: NextPage = () => {
   const router = useRouter();
   const [playerName, setPlayerName] = useState("");
@@ -31,15 +24,13 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Container>
-      <LoginForm
-        playerName={playerName}
-        setPlayerName={setPlayerName}
-        playlistURL={playlistURL}
-        setPlaylistURL={setPlaylistURL}
-        submit={createGame}
-      />
-    </Container>
+    <LoginForm
+      playerName={playerName}
+      setPlayerName={setPlayerName}
+      playlistURL={playlistURL}
+      setPlaylistURL={setPlaylistURL}
+      submit={createGame}
+    />
   );
 };
 

@@ -4,10 +4,26 @@ import { Header } from "./Header";
 import { NameForm } from "./NameForm";
 import { PlaylistForm } from "./PlaylistForm";
 
-const Container = styled("div")({
+const NameFormContainer = styled("div")({
   display: "flex",
-  alignItems: "center",
+  height: "80%",
   flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "3rem",
+});
+
+const PlaylistStepContainer = styled("div")({
+  display: "flex",
+  height: "80%",
+  flexDirection: "column",
+});
+
+const PlaylistFormContainer = styled("div")({
+  display: "flex",
+  height: "80%",
+  justifyContent: "center",
+  alignItems: "center",
   gap: "3rem",
 });
 
@@ -31,25 +47,29 @@ export function LoginForm({
   const [step, setStep] = React.useState(0);
 
   return (
-    <Container>
+    <>
       {step === 0 && (
-        <NameForm
-          playerName={playerName}
-          setPlayerName={setPlayerName}
-          setStep={setStep}
-          isJoining={isJoining}
-        />
+        <NameFormContainer>
+          <NameForm
+            playerName={playerName}
+            setPlayerName={setPlayerName}
+            setStep={setStep}
+            isJoining={isJoining}
+          />
+        </NameFormContainer>
       )}
       {step === 1 && (
-        <>
+        <PlaylistStepContainer>
           <Header playerName={playerName} />
-          <PlaylistForm
-            playlistURL={playlistURL}
-            setPlaylistURL={setPlaylistURL}
-            submit={submit}
-          />
-        </>
+          <PlaylistFormContainer>
+            <PlaylistForm
+              playlistURL={playlistURL}
+              setPlaylistURL={setPlaylistURL}
+              submit={submit}
+            />
+          </PlaylistFormContainer>
+        </PlaylistStepContainer>
       )}
-    </Container>
+    </>
   );
 }

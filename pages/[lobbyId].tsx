@@ -43,13 +43,6 @@ const LobbyHeaderWrapper = styled("div")({
   alignItems: "center",
 });
 
-const LoginWrapper = styled("div")({
-  height: "80%",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
 async function lobbyDoesntExistRedirect(
   lobbyId: string,
   router: ReturnType<typeof useRouter>
@@ -120,16 +113,14 @@ export default function Lobby() {
         </div>
       )}
       {!hasPlayerSetName && (
-        <LoginWrapper>
-          <LoginForm
-            playerName={playerName}
-            setPlayerName={setPlayerName}
-            playlistURL={playlistURL}
-            setPlaylistURL={setPlaylistURL}
-            submit={joinLobby}
-            isJoining
-          />
-        </LoginWrapper>
+        <LoginForm
+          playerName={playerName}
+          setPlayerName={setPlayerName}
+          playlistURL={playlistURL}
+          setPlaylistURL={setPlaylistURL}
+          submit={joinLobby}
+          isJoining
+        />
       )}
     </>
   );
