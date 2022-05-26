@@ -3,8 +3,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Header } from "./Header";
-import { PlaylistForm } from "./PlaylistForm";
 import { setPlayerName as localStorageSetPlayerName } from "../firebase/localstorage/playerName";
 
 const Title = styled("h1")({

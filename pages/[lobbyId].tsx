@@ -2,10 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { isLobbyExist as isLobbyExistPromise } from "../firebase/lobby";
 import { getValue } from "../firebase";
-import {
-  getPlayerName,
-  setPlayerName as setLocalStoragePlayerName,
-} from "../firebase/localstorage/playerName";
+import { getPlayerName } from "../firebase/localstorage/playerName";
 import { LoginForm } from "../components/LoginForm";
 import { addPlayerToLobby, isPlayerInLobby } from "../firebase/player";
 import { Header } from "../components/Header";
@@ -58,9 +55,8 @@ export default function Lobby() {
 
   async function joinLobby() {
     if (!(await isPlayerInLobby(lobbyId as string, playerName)))
-      await addPlayerToLobby(lobbyId as string, playerName);
+      await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
     setHasPlayerSetName(true);
-    setPlayerName(playerName);
   }
 
   return (

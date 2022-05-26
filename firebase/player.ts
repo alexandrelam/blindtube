@@ -8,8 +8,12 @@ export function isPlayerInLobby(lobbyId: string, playerName: string) {
   return getOnceValue(`lobby/${lobbyId}/players/${playerName}`);
 }
 
-export function addPlayerToLobby(lobbyId: string, playerName: string) {
+export function addPlayerToLobby(
+  lobbyId: string,
+  playerName: string,
+  playlistURL: string
+) {
   return setValue(`lobby/${lobbyId}/players/${playerName}`, {
-    playlist: "",
+    playlistURL,
   });
 }

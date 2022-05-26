@@ -4,9 +4,6 @@ import { LoginForm } from "../components/LoginForm";
 import { useState } from "react";
 import { createLobby } from "../firebase/lobby";
 import { useRouter } from "next/router";
-import { setPlayerName as localStorageSetPlayerName } from "../firebase/localstorage/playerName";
-import { PlaylistForm } from "../components/PlaylistForm";
-import { Header } from "../components/Header";
 import { addPlayList as localStorageAddPlayList } from "../firebase/localstorage/playlist";
 
 const Container = styled("div")({
