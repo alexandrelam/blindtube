@@ -8,12 +8,32 @@ import { addPlayerToLobby, isPlayerInLobby } from "../firebase/player";
 import { Header } from "../components/Header";
 import { styled } from "@mui/system";
 import { getPlaylist } from "../firebase/localstorage/playlist";
+import { Button } from "@mui/material";
+import { PlayerList } from "../components/PlayerList";
+import LinkIcon from "@mui/icons-material/Link";
 
 const Container = styled("div")({
   display: "flex",
   height: "100%",
   alignItems: "center",
   justifyContent: "center",
+});
+
+const ContentWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: "3rem",
+});
+
+const LobbyID = styled("span")({
+  fontSize: "1.5rem",
+  color: "#fff",
+});
+
+const LobbyHeaderWrapper = styled("div")({
+  display: "flex",
+  gap: "1rem",
+  alignItems: "center",
 });
 
 async function lobbyDoesntExistRedirect(
@@ -61,7 +81,27 @@ export default function Lobby() {
 
   return (
     <Container>
-      {hasPlayerSetName && <Header playerName={playerName} />}
+      {hasPlayerSetName && (
+        <>
+          <Header playerName={playerName} />
+          <ContentWrapper>
+            <LobbyHeaderWrapper>
+              <LobbyID>
+                <strong>Lobby id: </strong>
+                {lobbyId}
+              </LobbyID>
+              <Button
+                variant="outlined"
+                onClick={() => console.log("test")}
+                startIcon={<LinkIcon />}
+              >
+                Inviter
+              </Button>
+            </LobbyHeaderWrapper>
+            <PlayerList />
+          </ContentWrapper>
+        </>
+      )}
       {!hasPlayerSetName && (
         <LoginForm
           playerName={playerName}
