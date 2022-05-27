@@ -80,6 +80,15 @@ export default function Lobby() {
     }
   }, [lobbyId, router]);
 
+  useEffect(() => {
+    if (lobbyId && hasPlayerSetName && playlistURL) {
+      (async () => {
+        await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
+      })();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasPlayerSetName]);
+
   async function joinLobby() {
     if (!(await isPlayerInLobby(lobbyId as string, playerName)))
       await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
