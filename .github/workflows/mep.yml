@@ -6,6 +6,7 @@ jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -14,9 +15,6 @@ jobs:
         uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install --frozen-lockfile
-      - name: create env file
-        run: echo "The API key is:${{secrets.API_KEY}}"
-
       - name: Build
         uses: borales/actions-yarn@v2.3.0
         env:
