@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-      - uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install --frozen-lockfile
       - name: create env file
@@ -26,7 +26,7 @@ jobs:
           echo "APP_ID=${{secrets.APP_ID}}" >> .env
           echo "MEASUREMENT_ID=${{secrets.MEASUREMENT_ID}}" >> .env
       - name: Build
-      - uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build # will run `yarn build` command
       - name: Deploy 🚀
