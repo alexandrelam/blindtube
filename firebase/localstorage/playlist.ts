@@ -1,4 +1,4 @@
-export function addPlayList(playlistURL: string) {
+export function setPlaylist(playlistURL: string) {
   return localStorage.setItem("playlist", playlistURL);
 }
 

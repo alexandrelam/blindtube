@@ -7,7 +7,10 @@ import { LoginForm } from "../components/LoginForm";
 import { addPlayerToLobby, isPlayerInLobby } from "../firebase/player";
 import { Header } from "../components/Header";
 import { styled } from "@mui/system";
-import { getPlaylist } from "../firebase/localstorage/playlist";
+import {
+  getPlaylist,
+  setPlaylist as localStorageSetPlaylist,
+} from "../firebase/localstorage/playlist";
 import { Button, Snackbar, Alert } from "@mui/material";
 import { PlayerList } from "../components/PlayerList";
 import { Settings } from "../components/Settings";
@@ -78,6 +81,7 @@ export default function Lobby() {
         getValue(`lobby/${lobbyId}/players`, setLobbyPlayers);
       })();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lobbyId, router]);
 
   useEffect(() => {
@@ -93,6 +97,7 @@ export default function Lobby() {
     if (!(await isPlayerInLobby(lobbyId as string, playerName)))
       await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
     setHasPlayerSetName(true);
+    localStorageSetPlaylist(playlistURL);
   }
 
   const [snackbarState, setSnackbarState] = useState<{

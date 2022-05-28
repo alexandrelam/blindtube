@@ -1,20 +1,24 @@
 import type { NextPage } from "next";
-import { styled } from "@mui/system";
 import { LoginForm } from "../components/LoginForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createLobby } from "../firebase/lobby";
 import { useRouter } from "next/router";
-import { addPlayList as localStorageAddPlayList } from "../firebase/localstorage/playlist";
+import { setPlaylist as localStorageSetPlayList } from "../firebase/localstorage/playlist";
+import { getPlaylist } from "../firebase/localstorage/playlist";
 
 const Home: NextPage = () => {
   const router = useRouter();
   const [playerName, setPlayerName] = useState("");
   const [playlistURL, setPlaylistURL] = useState("");
 
+  useEffect(() => {
+    if (getPlaylist()) setPlaylistURL(getPlaylist());
+  }, []);
+
   async function createGame() {
     try {
       if (playlistURL) {
-        localStorageAddPlayList(playlistURL);
+        localStorageSetPlayList(playlistURL);
       }
       const lobbyId = await createLobby(playerName, playlistURL);
       router.push(`/${lobbyId}`);
