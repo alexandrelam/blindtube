@@ -3,8 +3,6 @@ require("dotenv").config();
 
 const nextConfig = {
   reactStrictMode: true,
-  assetPrefix: process.env.NODE_ENV === "production" ? "/blindtube/" : "",
-  basePath: process.env.NODE_ENV === "production" ? "/blindtube/" : "",
   env: {
     API_KEY: process.env.API_KEY,
     AUTH_DOMAIN: process.env.AUTH_DOMAIN,
