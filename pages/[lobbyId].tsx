@@ -8,7 +8,7 @@ import { addPlayerToLobby, isPlayerInLobby } from "../firebase/player";
 import { Header } from "../components/Header";
 import { styled } from "@mui/system";
 import { getPlaylist } from "../firebase/localstorage/playlist";
-import { Button } from "@mui/material";
+import { Button, Snackbar, Alert } from "@mui/material";
 import { PlayerList } from "../components/PlayerList";
 import { Settings } from "../components/Settings";
 import LinkIcon from "@mui/icons-material/Link";
@@ -95,8 +95,50 @@ export default function Lobby() {
     setHasPlayerSetName(true);
   }
 
+  const [snackbarState, setSnackbarState] = useState<{
+    open: boolean;
+    vertical: "top" | "bottom";
+    horizontal: "left" | "center" | "right";
+  }>({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
+  function handleSnackbarClose() {
+    setSnackbarState({
+      ...snackbarState,
+      open: false,
+    });
+  }
+
+  function copyUrlInClipboard() {
+    navigator.clipboard.writeText(`${window.location.origin}/${lobbyId}`);
+    setSnackbarState({
+      ...snackbarState,
+      open: true,
+    });
+  }
+
   return (
     <>
+      <Snackbar
+        open={snackbarState.open}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{
+          vertical: snackbarState.vertical,
+          horizontal: snackbarState.horizontal,
+        }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          LIEN COPIÉ !
+        </Alert>
+      </Snackbar>
       {hasPlayerSetName && (
         <div>
           <Header
@@ -111,7 +153,7 @@ export default function Lobby() {
               </LobbyID>
               <Button
                 variant="outlined"
-                onClick={() => console.log("test")}
+                onClick={copyUrlInClipboard}
                 startIcon={<LinkIcon />}
               >
                 Inviter
