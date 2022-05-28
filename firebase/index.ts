@@ -26,13 +26,12 @@ export async function setValue(
   return returnValue;
 }
 
-export async function getOnceValue(path: string) {
+export async function getOnceValue<T>(path: string): Promise<T | null> {
   return get(child(ref(database), path)).then((snapshot) => {
-    if (snapshot.exists()) {
-      return snapshot.val();
-    } else {
-      console.log("No data available");
+    if (!snapshot.exists()) {
+      return null;
     }
+    return snapshot.val();
   });
 }
 
@@ -40,11 +39,15 @@ export function getRef(path: string) {
   return ref(database, path);
 }
 
-export function getValue(path: string, setValue: (value: any) => void) {
+export function getValue(
+  path: string,
+  setValue: (value: any) => void,
+  dto: (value: any) => any
+) {
   onValue(getRef(path), (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      setValue(Object.entries(data));
+      setValue(dto(data));
     }
   });
 }

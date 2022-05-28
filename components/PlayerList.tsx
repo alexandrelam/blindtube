@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { PlayerCard } from "./PlayerCard";
+import { Player } from "../types/player";
 
 const Title = styled("h2")({
   fontSize: "2.5rem",
@@ -15,7 +16,7 @@ const Wrapper = styled("div")({
 });
 
 type Props = {
-  players: any[];
+  players: Player[];
 };
 
 export function PlayerList({ players }: Props) {
@@ -25,9 +26,9 @@ export function PlayerList({ players }: Props) {
       <Wrapper>
         {players.map((player) => (
           <PlayerCard
-            key={player[0]}
-            playerName={player[0]}
-            playlistURL={player[1].playlistURL}
+            key={player.playerName}
+            playerName={player.playerName}
+            playlistURL={player.playlistUrl}
           />
         ))}
       </Wrapper>

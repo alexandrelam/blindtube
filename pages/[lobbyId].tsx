@@ -15,6 +15,8 @@ import { Button, Snackbar, Alert } from "@mui/material";
 import { PlayerList } from "../components/PlayerList";
 import { Settings } from "../components/Settings";
 import LinkIcon from "@mui/icons-material/Link";
+import { Player } from "../types/player";
+import { listPlayersDto } from "../dto/players";
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -59,7 +61,7 @@ export default function Lobby() {
   const [playerName, setPlayerName] = useState<string>("");
   const [playlistURL, setPlaylistURL] = useState<string>("");
   const [hasPlayerSetName, setHasPlayerSetName] = useState<boolean>(false);
-  const [lobbyPlayers, setLobbyPlayers] = useState<string[]>([]);
+  const [lobbyPlayers, setLobbyPlayers] = useState<Player[]>([]);
   const { lobbyId } = router.query;
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function Lobby() {
           setPlaylistURL(getPlaylist());
         }
 
-        getValue(`lobby/${lobbyId}/players`, setLobbyPlayers);
+        getValue(`lobby/${lobbyId}/players`, setLobbyPlayers, listPlayersDto);
       })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
