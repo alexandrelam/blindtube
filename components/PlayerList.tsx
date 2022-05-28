@@ -28,7 +28,7 @@ export function PlayerList({ players }: Props) {
           <PlayerCard
             key={player.playerName}
             playerName={player.playerName}
-            playlistURL={player.playlistUrl}
+            playlistURL={player.playlistURL}
           />
         ))}
       </Wrapper>

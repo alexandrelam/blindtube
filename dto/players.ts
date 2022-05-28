@@ -6,8 +6,8 @@ type PlayerDB = {
 
 export function listPlayersDto(players: PlayerDB[]): Player[] {
   const entries = Object.entries(players);
-  return entries.map(([playerName, player]) => ({
+  return entries.map(([playerName, playerVariables]) => ({
     playerName,
-    playlistUrl: player.playlistURL,
+    playlistURL: playerVariables.playlistURL,
   }));
 }

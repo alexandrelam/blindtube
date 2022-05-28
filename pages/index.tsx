@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       if (playlistURL) {
         localStorageSetPlayList(playlistURL);
       }
-      const lobbyId = await createLobby(playerName, playlistURL);
+      const lobbyId = await createLobby(playerName, 3, playlistURL);
       router.push(`/${lobbyId}`);
     } catch (error) {
       console.error(error);

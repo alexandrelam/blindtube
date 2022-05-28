@@ -1,4 +1,8 @@
 export type Player = {
   playerName: string;
-  playlistUrl: string;
+  playlistURL: string;
+};
+
+export type PlayerCreated = {
+  playlistURL: string;
 };
