@@ -1,6 +1,7 @@
 import { styled } from "@mui/system";
 import { TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getValue, setValue } from "../firebase";
 
 const Title = styled("h2")({
   fontSize: "2.5rem",
@@ -14,8 +15,19 @@ const Wrapper = styled("div")({
   gap: "1rem",
 });
 
-export function Settings() {
-  const [numberOfRounds, setNumberOfRounds] = useState(3);
+type Props = {
+  lobbyId: string;
+};
+
+export function Settings({ lobbyId }: Props) {
+  const [numberOfRounds, setNumberOfRounds] = useState<number>(0);
+
+  useEffect(() => {
+    getValue(`lobby/${lobbyId}/numberOfRounds`, setNumberOfRounds);
+    if (numberOfRounds)
+      setValue(`lobby/${lobbyId}/numberOfRounds`, numberOfRounds);
+  }, [lobbyId, numberOfRounds]);
+
   return (
     <Wrapper>
       <Title>Paramètres</Title>

@@ -19,7 +19,7 @@ export const database = getDatabase(app);
 
 export async function setValue(
   path: string,
-  value: string | null | Record<string | number, any>,
+  value: string | number | null | Record<string | number, any>,
   returnValue: any = null
 ) {
   await set(ref(database, path), value);
@@ -42,12 +42,14 @@ export function getRef(path: string) {
 export function getValue(
   path: string,
   setValue: (value: any) => void,
-  dto: (value: any) => any
+  dto?: (value: any) => any
 ) {
   onValue(getRef(path), (snapshot) => {
     const data = snapshot.val();
-    if (data) {
+    if (data && dto) {
       setValue(dto(data));
+    } else if (data) {
+      setValue(data);
     }
   });
 }

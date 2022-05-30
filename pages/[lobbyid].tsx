@@ -168,7 +168,7 @@ export default function Lobby() {
             </LobbyHeaderWrapper>
             <ContentWrapper>
               <PlayerList players={lobbyPlayers} />
-              <Settings />
+              <Settings lobbyId={lobbyId as string} />
             </ContentWrapper>
           </Wrapper>
         </div>

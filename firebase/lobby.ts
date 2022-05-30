@@ -30,3 +30,10 @@ export async function isLobbyExist(lobbyId: string) {
     snapshot.exists()
   );
 }
+
+export async function updateNumberOfRound(
+  lobbyId: number,
+  numberOfRounds: number
+) {
+  await setValue(`lobby/${lobbyId}/numberOfRounds`, numberOfRounds);
+}
