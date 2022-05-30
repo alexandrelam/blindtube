@@ -62,7 +62,7 @@ export default function Lobby() {
   const [playlistURL, setPlaylistURL] = useState<string>("");
   const [hasPlayerSetName, setHasPlayerSetName] = useState<boolean>(false);
   const [lobbyPlayers, setLobbyPlayers] = useState<Player[]>([]);
-  const { lobbyId } = router.query;
+  const { lobbyid: lobbyId } = router.query;
 
   useEffect(() => {
     if (lobbyId) {
