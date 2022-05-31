@@ -9,6 +9,8 @@ export async function createLobby(
   numberOfRounds: number,
   playlistURL: string
 ) {
+  if (!playerName) throw new Error("Player name is required");
+
   const lobbyId = await lobbyIdGenerator();
 
   const lobby: LobbySettings = {

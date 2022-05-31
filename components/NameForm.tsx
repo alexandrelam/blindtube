@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { Button, Snackbar, Alert } from "@mui/material";
 import { styled } from "@mui/system";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { setPlayerName as localStorageSetPlayerName } from "../firebase/localstorage/playerName";
@@ -31,7 +31,31 @@ export function NameForm({
   setStep,
   isJoining,
 }: Props) {
+  const [snackbarState, setSnackbarState] = useState<{
+    open: boolean;
+    vertical: "top" | "bottom";
+    horizontal: "left" | "center" | "right";
+  }>({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
+  function handleSnackbarClose() {
+    setSnackbarState({
+      ...snackbarState,
+      open: false,
+    });
+  }
+
   function handleSubmitName() {
+    if (!playerName) {
+      setSnackbarState({
+        ...snackbarState,
+        open: true,
+      });
+      return;
+    }
     localStorageSetPlayerName(playerName);
     setStep(1);
   }
@@ -55,6 +79,23 @@ export function NameForm({
           {isJoining ? "Rejoindre" : "Démarrer"}
         </Button>
       </Wrapper>
+      <Snackbar
+        open={snackbarState.open}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{
+          vertical: snackbarState.vertical,
+          horizontal: snackbarState.horizontal,
+        }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Vous devez rentrer un nom valide!
+        </Alert>
+      </Snackbar>
     </>
   );
 }

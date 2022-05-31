@@ -1,4 +1,5 @@
 export function setPlayerName(name: string) {
+  if (!name) return;
   return localStorage.setItem("player-name", name);
 }
 
