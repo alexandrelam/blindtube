@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Button, Snackbar, Alert } from "@mui/material";
+import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { setPlayerName as localStorageSetPlayerName } from "../firebase/localstorage/playerName";
+import { Notification } from "./Notification";
 
 const Title = styled("h1")({
   fontSize: "2.5rem",
@@ -31,29 +32,11 @@ export function NameForm({
   setStep,
   isJoining,
 }: Props) {
-  const [snackbarState, setSnackbarState] = useState<{
-    open: boolean;
-    vertical: "top" | "bottom";
-    horizontal: "left" | "center" | "right";
-  }>({
-    open: false,
-    vertical: "top",
-    horizontal: "center",
-  });
-
-  function handleSnackbarClose() {
-    setSnackbarState({
-      ...snackbarState,
-      open: false,
-    });
-  }
+  const [openNotification, setOpenNotification] = useState(false);
 
   function handleSubmitName() {
     if (!playerName) {
-      setSnackbarState({
-        ...snackbarState,
-        open: true,
-      });
+      setOpenNotification(true);
       return;
     }
     localStorageSetPlayerName(playerName);
@@ -79,23 +62,11 @@ export function NameForm({
           {isJoining ? "Rejoindre" : "Démarrer"}
         </Button>
       </Wrapper>
-      <Snackbar
-        open={snackbarState.open}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{
-          vertical: snackbarState.vertical,
-          horizontal: snackbarState.horizontal,
-        }}
-      >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Vous devez rentrer un nom valide!
-        </Alert>
-      </Snackbar>
+      <Notification
+        open={openNotification}
+        setOpen={setOpenNotification}
+        type="error"
+      />
     </>
   );
 }

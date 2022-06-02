@@ -11,12 +11,13 @@ import {
   getPlaylist,
   setPlaylist as localStorageSetPlaylist,
 } from "../firebase/localstorage/playlist";
-import { Button, Snackbar, Alert } from "@mui/material";
+import { Button } from "@mui/material";
 import { PlayerList } from "../components/PlayerList";
 import { Settings } from "../components/Settings";
 import LinkIcon from "@mui/icons-material/Link";
 import { Player } from "../types/player";
 import { listPlayersDto } from "../dto/players";
+import { Notification } from "../components/Notification";
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -62,6 +63,7 @@ export default function Lobby() {
   const [playlistURL, setPlaylistURL] = useState<string>("");
   const [hasPlayerSetName, setHasPlayerSetName] = useState<boolean>(false);
   const [lobbyPlayers, setLobbyPlayers] = useState<Player[]>([]);
+  const [openNotification, setOpenNotification] = useState<boolean>(false);
   const { lobbyid: lobbyId } = router.query;
 
   useEffect(() => {
@@ -102,50 +104,18 @@ export default function Lobby() {
     localStorageSetPlaylist(playlistURL);
   }
 
-  const [snackbarState, setSnackbarState] = useState<{
-    open: boolean;
-    vertical: "top" | "bottom";
-    horizontal: "left" | "center" | "right";
-  }>({
-    open: false,
-    vertical: "top",
-    horizontal: "center",
-  });
-
-  function handleSnackbarClose() {
-    setSnackbarState({
-      ...snackbarState,
-      open: false,
-    });
-  }
-
   function copyUrlInClipboard() {
     navigator.clipboard.writeText(`${window.location.origin}/${lobbyId}`);
-    setSnackbarState({
-      ...snackbarState,
-      open: true,
-    });
+    setOpenNotification(true);
   }
 
   return (
     <>
-      <Snackbar
-        open={snackbarState.open}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{
-          vertical: snackbarState.vertical,
-          horizontal: snackbarState.horizontal,
-        }}
-      >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          LIEN COPIÉ !
-        </Alert>
-      </Snackbar>
+      <Notification
+        open={openNotification}
+        setOpen={setOpenNotification}
+        type="success"
+      />
       {hasPlayerSetName && (
         <div>
           <Header
