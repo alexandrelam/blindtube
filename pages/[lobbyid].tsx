@@ -18,6 +18,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Player } from "../types/player";
 import { listPlayersDto } from "../dto/players";
 import { Notification } from "../components/Notification";
+import { fetchPlaylist } from "../firebase/playlist";
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -35,6 +36,12 @@ const ContentWrapper = styled("div")({
   display: "flex",
   margin: "0 3rem",
   justifyContent: "space-between",
+});
+
+const StartButtonWrapper = styled("div")({
+  marginTop: "3rem",
+  display: "flex",
+  justifyContent: "flex-end",
 });
 
 const LobbyID = styled("span")({
@@ -94,6 +101,10 @@ export default function Lobby() {
         await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
       })();
     }
+
+    fetchPlaylist().then((playlist) => {
+      console.log(playlist);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasPlayerSetName]);
 
@@ -140,6 +151,11 @@ export default function Lobby() {
               <PlayerList players={lobbyPlayers} />
               <Settings lobbyId={lobbyId as string} />
             </ContentWrapper>
+            <StartButtonWrapper>
+              <Button variant="contained" size="large">
+                Démarrer
+              </Button>
+            </StartButtonWrapper>
           </Wrapper>
         </div>
       )}

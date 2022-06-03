@@ -12,6 +12,7 @@ const nextConfig = {
     MESSAGING_SENDER_ID: process.env.MESSAGING_SENDER_ID,
     APP_ID: process.env.APP_ID,
     MEASUREMENT_ID: process.env.MEASUREMENT_ID,
+    YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
   },
 };
 
