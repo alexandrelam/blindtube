@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Button, TextField } from "@mui/material";
+import { Notification } from "./Notification";
 
 const Title = styled("h2")({
   fontSize: "2.5rem",
@@ -27,27 +28,33 @@ type Props = {
   setPlaylistURL: (playerlistURL: string) => void;
 };
 
-function parseYoutubePlaylistUrl(url: string): string {
+function parseYoutubePlaylistUrl(url: string): string | null {
   const params = new URLSearchParams(`?${url.split("?")[1]}`);
   const list = params.get("list");
   console.log(params.keys());
-  if (list) {
-    console.log(list);
-    return list;
-  } else {
-    throw new Error(`Invalid Youtube URL: ${url}`);
-  }
+  if (!list) return null;
+  return list;
 }
 
 export function PlaylistForm({ playlistURL, setPlaylistURL, submit }: Props) {
+  const [openNotification, setOpenNotification] = React.useState(false);
+
   function handleValidatePlaylistURL() {
     const parsedPlaylistURL = parseYoutubePlaylistUrl(playlistURL);
     if (parsedPlaylistURL) {
       submit(parsedPlaylistURL);
+    } else {
+      setOpenNotification(true);
     }
   }
   return (
     <Container>
+      <Notification
+        label={"Vous devez rentrer une URL valide"}
+        open={openNotification}
+        setOpen={setOpenNotification}
+        type="error"
+      />
       <Title>Ajouter une playlist youtube</Title>
       <Wrapper>
         <TextField

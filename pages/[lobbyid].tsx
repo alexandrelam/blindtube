@@ -127,6 +127,7 @@ export default function Lobby() {
   return (
     <>
       <Notification
+        label={"Lien copié !"}
         open={openNotification}
         setOpen={setOpenNotification}
         type="success"

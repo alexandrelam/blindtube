@@ -63,6 +63,7 @@ export function NameForm({
         </Button>
       </Wrapper>
       <Notification
+        label={"Vous devez rentrer un pseudo"}
         open={openNotification}
         setOpen={setOpenNotification}
         type="error"
