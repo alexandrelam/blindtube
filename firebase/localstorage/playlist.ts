@@ -1,9 +1,15 @@
-export function setPlaylist(playlistURL: string) {
-  return localStorage.setItem("playlist", playlistURL);
+export function setPlaylist(playlistURL: string, playlistID: string) {
+  return localStorage.setItem(
+    "playlist",
+    JSON.stringify({ playlistURL, playlistID })
+  );
 }
 
-export function getPlaylist() {
-  return localStorage.getItem("playlist")
-    ? (localStorage.getItem("playlist") as string)
-    : "";
+export function getPlaylist(): {
+  playlistURL: string;
+  playlistID: string;
+} | null {
+  const playlistStr = localStorage.getItem("playlist");
+  if (!playlistStr) return null;
+  return JSON.parse(playlistStr);
 }

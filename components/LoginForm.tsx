@@ -32,7 +32,7 @@ type Props = {
   setPlayerName: Dispatch<SetStateAction<string>>;
   playlistURL: string;
   setPlaylistURL: Dispatch<SetStateAction<string>>;
-  submit: () => void;
+  submit: (playlistID: string) => Promise<void>;
   isJoining?: boolean;
 };
 

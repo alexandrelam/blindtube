@@ -10,15 +10,21 @@ const Home: NextPage = () => {
   const router = useRouter();
   const [playerName, setPlayerName] = useState("");
   const [playlistURL, setPlaylistURL] = useState("");
+  const [playlistID, setPlaylistID] = useState("");
 
   useEffect(() => {
-    if (getPlaylist()) setPlaylistURL(getPlaylist());
+    const playlist = getPlaylist();
+    if (playlist) {
+      setPlaylistURL(playlist.playlistURL);
+      setPlaylistID(playlist.playlistID);
+    }
   }, []);
 
-  async function createGame() {
+  async function createGame(playlistID: string) {
+    console.log("playlistID", playlistID);
     try {
       if (playlistURL) {
-        localStorageSetPlayList(playlistURL);
+        localStorageSetPlayList(playlistURL, playlistID);
       }
       const lobbyId = await createLobby(playerName, 3, playlistURL);
       router.push(`/${lobbyId}`);

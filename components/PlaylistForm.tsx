@@ -22,12 +22,30 @@ const Wrapper = styled("div")({
 });
 
 type Props = {
-  submit: () => void;
+  submit: (playlistID: string) => Promise<void>;
   playlistURL: string;
   setPlaylistURL: (playerlistURL: string) => void;
 };
 
+function parseYoutubePlaylistUrl(url: string): string {
+  const params = new URLSearchParams(`?${url.split("?")[1]}`);
+  const list = params.get("list");
+  console.log(params.keys());
+  if (list) {
+    console.log(list);
+    return list;
+  } else {
+    throw new Error(`Invalid Youtube URL: ${url}`);
+  }
+}
+
 export function PlaylistForm({ playlistURL, setPlaylistURL, submit }: Props) {
+  function handleValidatePlaylistURL() {
+    const parsedPlaylistURL = parseYoutubePlaylistUrl(playlistURL);
+    if (parsedPlaylistURL) {
+      submit(parsedPlaylistURL);
+    }
+  }
   return (
     <Container>
       <Title>Ajouter une playlist youtube</Title>
@@ -39,7 +57,7 @@ export function PlaylistForm({ playlistURL, setPlaylistURL, submit }: Props) {
           value={playlistURL}
           onChange={(e) => setPlaylistURL(e.target.value)}
         />
-        <Button variant="contained" onClick={submit}>
+        <Button variant="contained" onClick={handleValidatePlaylistURL}>
           Ajouter
         </Button>
         <Button
@@ -47,7 +65,7 @@ export function PlaylistForm({ playlistURL, setPlaylistURL, submit }: Props) {
           color="secondary"
           onClick={() => {
             setPlaylistURL("");
-            submit();
+            submit("");
           }}
         >
           Skip

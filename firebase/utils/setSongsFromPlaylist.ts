@@ -1,5 +1,7 @@
+import { PlaylistItem } from "../../types/playlist";
+
 export function setSongsFromPlaylist(
-  playlist: string[],
+  playlist: PlaylistItem[],
   numberOfRounds: number
 ): string[] {
   return ["test"];

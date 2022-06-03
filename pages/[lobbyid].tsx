@@ -68,6 +68,7 @@ export default function Lobby() {
   const router = useRouter();
   const [playerName, setPlayerName] = useState<string>("");
   const [playlistURL, setPlaylistURL] = useState<string>("");
+  const [playlistID, setPlaylistID] = useState<string>("");
   const [hasPlayerSetName, setHasPlayerSetName] = useState<boolean>(false);
   const [lobbyPlayers, setLobbyPlayers] = useState<Player[]>([]);
   const [openNotification, setOpenNotification] = useState<boolean>(false);
@@ -84,11 +85,6 @@ export default function Lobby() {
           setHasPlayerSetName(true);
         }
 
-        // if player has playlist in localstorage then use it
-        if (getPlaylist()) {
-          setPlaylistURL(getPlaylist());
-        }
-
         getValue(`lobby/${lobbyId}/players`, setLobbyPlayers, listPlayersDto);
       })();
     }
@@ -96,23 +92,31 @@ export default function Lobby() {
   }, [lobbyId, router]);
 
   useEffect(() => {
-    if (lobbyId && hasPlayerSetName && playlistURL) {
-      (async () => {
+    (async () => {
+      if (lobbyId && hasPlayerSetName && playlistURL) {
         await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
-      })();
-    }
+      }
 
-    fetchPlaylist().then((playlist) => {
-      console.log(playlist);
-    });
+      // if player has playlist in localstorage then use it
+      const playlist = getPlaylist();
+      if (playlist) {
+        setPlaylistURL(playlist.playlistURL);
+        setPlaylistID(playlist.playlistID);
+      }
+
+      await fetchPlaylist(playlistID).then((playlist) => {
+        console.log(playlist);
+      });
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasPlayerSetName]);
 
-  async function joinLobby() {
+  async function joinLobby(playlistID: string) {
     if (!(await isPlayerInLobby(lobbyId as string, playerName)))
       await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
+    setPlaylistID(playlistID);
+    localStorageSetPlaylist(playlistURL, playlistID);
     setHasPlayerSetName(true);
-    localStorageSetPlaylist(playlistURL);
   }
 
   function copyUrlInClipboard() {
