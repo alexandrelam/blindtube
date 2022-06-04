@@ -1,4 +1,5 @@
 import { YoutubePlaylist, PlaylistItem } from "../types/playlist";
+import { playlistDto } from "../dto/playlist";
 
 export async function fetchPlaylist(
   playlistID: string
@@ -10,13 +11,5 @@ export async function fetchPlaylist(
   const data: YoutubePlaylist = await res.json();
   console.log(data);
   if (!data.items) return [];
-  return data.items.reduce((acc: PlaylistItem[], item) => {
-    const playlistItem: PlaylistItem = {
-      title: item.snippet.title,
-      videoId: item.snippet.resourceId.videoId,
-    };
-
-    if (item.snippet.title !== "Private video") return [...acc, playlistItem];
-    return acc;
-  }, []);
+  return playlistDto(data);
 }
