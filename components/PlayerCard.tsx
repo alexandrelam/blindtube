@@ -14,13 +14,8 @@ const Card = styled("div")({
   alignItems: "center",
 });
 
-const Link = styled("a")({
+const Link = styled("span")({
   color: "#93c5fd",
-  textDecoration: "none",
-  "&:hover": {
-    cursor: "pointer",
-    textDecoration: "underline",
-  },
 });
 
 const Title = styled("h3")({
