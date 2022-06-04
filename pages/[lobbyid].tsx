@@ -18,7 +18,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Player } from "../types/player";
 import { listPlayersDto } from "../dto/players";
 import { Notification } from "../components/Notification";
-import { fetchPlaylist } from "../firebase/playlist";
+import { addPlaylistToLobby, fetchPlaylist } from "../firebase/playlist";
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -93,27 +93,26 @@ export default function Lobby() {
 
   useEffect(() => {
     (async () => {
-      if (lobbyId && hasPlayerSetName && playlistURL) {
-        await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
+      if (lobbyId && hasPlayerSetName) {
+        addPlayerToLobby(lobbyId as string, playerName);
       }
 
       // if player has playlist in localstorage then use it
-      const playlist = getPlaylist();
-      if (playlist) {
-        setPlaylistURL(playlist.playlistURL);
-        setPlaylistID(playlist.playlistID);
+      const playlistInfo = getPlaylist();
+      if (playlistInfo) {
+        setPlaylistURL(playlistInfo.playlistURL);
+        setPlaylistID(playlistInfo.playlistID);
       }
 
-      await fetchPlaylist(playlistID).then((playlist) => {
-        console.log(playlist);
-      });
+      const playlist = await fetchPlaylist(playlistID);
+      addPlaylistToLobby(lobbyId as string, playerName, playlist);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasPlayerSetName]);
 
   async function joinLobby(playlistID: string) {
     if (!(await isPlayerInLobby(lobbyId as string, playerName)))
-      await addPlayerToLobby(lobbyId as string, playerName, playlistURL);
+      addPlayerToLobby(lobbyId as string, playerName);
     setPlaylistID(playlistID);
     localStorageSetPlaylist(playlistURL, playlistID);
     setHasPlayerSetName(true);

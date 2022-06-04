@@ -1,5 +1,6 @@
 import { YoutubePlaylist, PlaylistItem } from "../types/playlist";
 import { playlistDto } from "../dto/playlist";
+import { setValue } from ".";
 
 export async function fetchPlaylist(
   playlistID: string
@@ -9,7 +10,17 @@ export async function fetchPlaylist(
     `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=25&playlistId=${playlistID}&key=${process.env.YOUTUBE_API_KEY}`
   );
   const data: YoutubePlaylist = await res.json();
-  console.log(data);
   if (!data.items) return [];
   return playlistDto(data);
+}
+
+export function addPlaylistToLobby(
+  lobbyId: string,
+  playerName: string,
+  playlist: PlaylistItem[]
+) {
+  if (playlist.length)
+    setValue(`lobby/${lobbyId}/players/${playerName}`, {
+      playlist,
+    });
 }

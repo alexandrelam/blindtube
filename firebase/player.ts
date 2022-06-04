@@ -10,11 +10,10 @@ export async function isPlayerInLobby(lobbyId: string, playerName: string) {
 
 export function addPlayerToLobby(
   lobbyId: string,
-  playerName: string,
-  playlistURL: string
+  playerName: string
 ): Promise<void> {
   return setValue(`lobby/${lobbyId}/players/${playerName}`, {
-    playlistURL,
+    playlist: false,
   });
 }
 

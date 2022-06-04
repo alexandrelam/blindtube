@@ -1,13 +1,14 @@
 import { Player } from "../types/player";
+import { PlaylistItem } from "../types/playlist";
 
 type PlayerDB = {
-  playlistURL: string;
+  playlist: PlaylistItem[];
 };
 
 export function listPlayersDto(players: PlayerDB[]): Player[] {
   const entries = Object.entries(players);
   return entries.map(([playerName, playerVariables]) => ({
     playerName,
-    playlistURL: playerVariables.playlistURL,
+    playlist: playerVariables.playlist,
   }));
 }

@@ -13,15 +13,14 @@ const Home: NextPage = () => {
   const [playlistID, setPlaylistID] = useState("");
 
   useEffect(() => {
-    const playlist = getPlaylist();
-    if (playlist) {
-      setPlaylistURL(playlist.playlistURL);
-      setPlaylistID(playlist.playlistID);
+    const playlistInfo = getPlaylist();
+    if (playlistInfo) {
+      setPlaylistURL(playlistInfo.playlistURL);
+      setPlaylistID(playlistInfo.playlistID);
     }
   }, []);
 
   async function createGame(playlistID: string) {
-    console.log("playlistID", playlistID);
     try {
       if (playlistURL) {
         localStorageSetPlayList(playlistURL, playlistID);

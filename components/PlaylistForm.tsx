@@ -31,7 +31,6 @@ type Props = {
 function parseYoutubePlaylistUrl(url: string): string | null {
   const params = new URLSearchParams(`?${url.split("?")[1]}`);
   const list = params.get("list");
-  console.log(params.keys());
   if (!list) return null;
   return list;
 }

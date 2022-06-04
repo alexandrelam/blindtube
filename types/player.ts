@@ -1,6 +1,8 @@
+import { PlaylistItem } from "./playlist";
+
 export type Player = {
   playerName: string;
-  playlistURL: string;
+  playlist: PlaylistItem[] | boolean;
 };
 
 export type PlayerCreated = {
